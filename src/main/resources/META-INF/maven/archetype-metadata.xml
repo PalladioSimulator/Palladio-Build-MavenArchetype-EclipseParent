@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="parent"
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<requiredProperties>
+		<requiredProperty key="package">
+			<defaultValue>not-used</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="artifactId">
+			<defaultValue>not-used</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="version">
+			<defaultValue>0.1.0-SNAPSHOT</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="palladioParentVersion">
+			<defaultValue>0.1.9</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="palladioTpRefresherVersion">
+			<defaultValue>0.2.2</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="tychoPluginVersion">
+			<defaultValue>1.1.0</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>.mvn</directory>
+		</fileSet>
+		<fileSet>
+			<directory/>
+			<includes>
+				<include>.gitignore</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+	<modules>
+		<module id="bundles" dir="bundles" name="bundles" />
+		<module id="features" dir="features" name="features" />
+		<module id="tests" dir="tests" name="tests" />
+		<module id="releng" dir="releng" name="releng">
+			<fileSets>
+				<fileSet filtered="true">
+					<directory>__groupId__.targetplatform</directory>
+				</fileSet>
+			</fileSets>
+		
+			<modules>
+				<module id="${groupoId}.updatesite" dir="__groupId__.updatesite" name="${groupoId}.updatesite">
+					<fileSets>
+						<fileSet filtered="true">
+							<directory/>
+							<includes>
+								<include>*</include>
+							</includes>
+							<excludes>
+								<exclude>pom.xml</exclude>
+							</excludes>
+						</fileSet>
+					</fileSets>
+				</module>
+			</modules>
+		</module>
+	</modules>
+
+</archetype-descriptor>
