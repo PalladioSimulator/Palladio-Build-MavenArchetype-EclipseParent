@@ -4,7 +4,7 @@
 
 	<groupId>org.palladiosimulator</groupId>
 	<artifactId>eclipse-project</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<packaging>maven-archetype</packaging>
 
 	<name>Palladio Simulator Eclipse Project Archetype</name>
