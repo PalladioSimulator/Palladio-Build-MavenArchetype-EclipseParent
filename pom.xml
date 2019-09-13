@@ -4,7 +4,7 @@
 
 	<groupId>org.palladiosimulator</groupId>
 	<artifactId>eclipse-project</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2-SNAPSHOT</version>
 	<packaging>maven-archetype</packaging>
 
 	<name>Palladio Simulator Eclipse Project Archetype</name>
@@ -27,17 +27,6 @@
 		</developer>
 	</developers>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-
 	<scm>
 		<connection>scm:git:git://github.com/palladiosimulator/palladio-build-mavenarchetype-eclipseparent.git</connection>
 		<developerConnection>scm:git:ssh://github.com/palladiosimulator/palladio-build-mavenarchetype-eclipseparent.git</developerConnection>
@@ -49,18 +38,42 @@
 	</properties>
 
 	<profiles>
+
+		<!-- Build configuration of parent POM itself -->
 		<profile>
-			<id>skipSigning</id>
-			<activation>
-				<property>
-					<name>!skipSigning</name>
-				</property>
-			</activation>
+			<id>local-build-deployable</id>
+			<!-- activate this profile explicitly by adding -Plocal-build-deployable to the maven command -->
+			<distributionManagement>
+				<snapshotRepository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+				</snapshotRepository>
+				<repository>
+					<id>ossrh</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<gpgArguments>
+								<arg>--pinentry-mode</arg>
+								<arg>loopback</arg>
+							</gpgArguments>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -99,20 +112,6 @@
 							<id>attach-sources</id>
 							<goals>
 								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.6</version>
-					<executions>
-						<execution>
-							<id>sign-artifacts</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>sign</goal>
 							</goals>
 						</execution>
 					</executions>
